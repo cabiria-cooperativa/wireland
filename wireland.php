@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Wireland
- * Plugin URI: https://www.cabiria.net
+ * Plugin URI: https://github.com/cabiria-cooperativa/wireland
  * Description: Wireframe per landing page
  * Version: 1.0.0
  * Author: Simone Alati
@@ -16,7 +16,6 @@ class Wireland {
 
     function __construct() {
 
-		
         add_action('wp_enqueue_scripts', array($this, 'init'));     	/* accodo js e css                      */
         //add_action('admin_menu', array($this, 'add_settings_page'));  /* creo una pagina di impostazioni      */
         add_shortcode('cabi_plugin', array($this, 'render'));       	/* aggiungo uno shortcode               */
@@ -24,6 +23,9 @@ class Wireland {
         /* azioni ajax */
         add_action('wp_ajax_nopriv_hello_world_ajax', array($this, 'hello_world_ajax'));
         add_action('wp_ajax_hello_world_ajax', array($this, 'hello_world_ajax'));
+
+        add_filter('theme_page_templates', array($this, 'add_template_to_select'), 10, 4);
+        add_filter('template_include', array($this, 'get_template'));
 
         /* attivazione e disattivazione plugin */
         register_activation_hook(__FILE__, array($this, 'activation'));
@@ -42,6 +44,26 @@ class Wireland {
         wp_enqueue_style( 'cabi_plugin', plugin_dir_url( __FILE__ ) . 'assets/css/style.css' , array(), mt_rand());
         wp_enqueue_script('cabi_plugin', plugin_dir_url( __FILE__ ) . 'assets/js/wireland.js', array('jquery'), mt_rand(), true);
         wp_localize_script('init', 'init_ajax', array('url' => admin_url( 'admin-ajax.php' )));
+    }
+
+    /* aggiunge il template alla select del backend */
+    function add_template_to_select($post_templates, $wp_theme, $post, $post_type) {
+        $post_templates['wireland-default.php'] = __('Wireland default');
+        return $post_templates;
+    }
+
+    /* recupera il template default */
+    function get_template($template) {
+        global $post;
+        if (get_page_template_slug($post->ID) === 'wireland-default.php') {
+            if ($theme_file = locate_template(array('wireland-default.php'))) {
+                $template = $theme_file;
+            } else {
+                $template = plugin_dir_path( __FILE__ ) . 'assets/templates/wireland-default.php';
+            }
+        }
+        if (!$template) throw new \Exception('No template found');
+        return $template;
     }
 
     function render($atts, $content = null) {
