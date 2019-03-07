@@ -75,7 +75,6 @@
                             <p><input type="checkbox" name="privacy" id="privacy">Lorem ipsum dolor sit amet</a>, consectetur adipiscing elit. Aenean ut consectetur turpis, sit amet aliquam nulla. Ut auctor quam ac quam semper porttitor.</p>
                             <input class="cabi_block--submit" type="submit" value="Invia">
                         </form>
-                        </div>
                     </div>
                 </div>
             </div>
