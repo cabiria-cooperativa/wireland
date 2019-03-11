@@ -142,7 +142,7 @@
                 </div>
             </section>
 
-            <section class="cabi_block">
+            <section class="cabi_block cabi_block--chequered">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
@@ -156,6 +156,22 @@
                     </div>
                 </div>
             </section>
+			
+			<section class="cabi_block cabi_block--chequered">
+                <div class="container">
+                    <div class="row">
+						<div class="col-md-6 cabi_block__coverimage" style="background: url('https://picsum.photos/768/768') no-repeat center top">
+                        </div>
+                        <div class="col-md-6">
+                            <h2>Cover image</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut consectetur turpis, sit amet aliquam nulla. Ut auctor quam ac quam semper porttitor. Etiam mollis lacinia libero ut congue. Vestibulum facilisis ipsum vitae risus elementum condimentum quis a elit. Suspendisse diam ipsum, congue sit amet dapibus et, rutrum malesuada elit. Sed vel porttitor urna. Phasellus placerat ornare cursus.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut consectetur turpis, sit amet aliquam nulla. Ut auctor quam ac quam semper porttitor. Etiam mollis lacinia libero ut congue. Vestibulum facilisis ipsum vitae risus elementum condimentum quis a elit. Suspendisse diam ipsum, congue sit amet dapibus et, rutrum malesuada elit. Sed vel porttitor urna. Phasellus placerat ornare cursus.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut consectetur turpis, sit amet aliquam nulla. Ut auctor quam ac quam semper porttitor. Etiam mollis lacinia libero ut congue. Vestibulum facilisis ipsum vitae risus elementum condimentum quis a elit. Suspendisse diam ipsum, congue sit amet dapibus et, rutrum malesuada elit. Sed vel porttitor urna. Phasellus placerat ornare cursus.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+			
             <section class="cabi_block">
                     <div class="container">
                         <div class="row">

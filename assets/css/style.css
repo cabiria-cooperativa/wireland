@@ -152,6 +152,11 @@ em {
     text-align: center;
 }
 
+/* sposta l'immagine prima del testo */
+.cabi_block--chequered:nth-of-type(even) .row > .cabi_block__coverimage {
+	order: -1;
+}
+
 /* HERO ================================== */
 
 .cabi_block--hero {
@@ -326,6 +331,11 @@ em {
     .cabi_block--hero {
         height: var(--images_heroheight);
     }
+	
+	/* sposta l'immagine dopo il testo */
+	.cabi_block--chequered:nth-of-type(even) .row > .cabi_block__coverimage {
+		order: 2;
+	}
 
 }
 
