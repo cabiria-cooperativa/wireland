@@ -103,12 +103,24 @@ a:hover {
     color: var(--colors__link_hover);
 }
 
+p {
+    margin-bottom: var(--padding__default) !important;
+}
+
 ul, ol {
     margin: 0 0 var(--margin__default) var(--margin__default);
 }
 
 li {
     list-style-type: square;
+}
+
+strong {
+    font-weight: 700;
+}
+
+em {
+    font-style: italic;
 }
 
 /* BLOCK ================================ */
