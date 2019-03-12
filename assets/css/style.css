@@ -241,7 +241,7 @@ em {
     opacity: 0.8;
 }
 
-.cabi_block--form input {
+.cabi_block--form input, .cabi_block--form select {
     border: none;
     padding: var(--form__spacing);
     margin-bottom: var(--form__spacing);
@@ -251,7 +251,7 @@ em {
     margin-right: 6px !important;
 }
 
-.cabi_block--input {
+.cabi_block--input, .cabi_block--select {
     width: 100%;
 }
 
