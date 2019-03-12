@@ -9,6 +9,7 @@
     --font_size__h4: 14px;
     --font_size__h5: 12px;
     --font_size__h6: 10px;
+	--font_size__small: 12px;
 
     /* padding & margin */
     --padding__default: 20px;
@@ -88,6 +89,10 @@ h5 {
 
 h6 {
     font-size: var(--font_size__h6);
+}
+
+small {
+    font-size: var(--font_size__small);
 }
 
 a {
