@@ -1,0 +1,37 @@
+/* ADMIN ================================ */
+
+.wireland_admin_form {
+
+}
+
+.wireland_admin_form h2 {
+    font-size: 21px;
+    font-weight: normal;
+}
+
+.wireland_admin_form label {
+    font-size: 16px;
+    display: block;
+    margin: 24px 0 6px 0;
+    font-weight: 700;
+}
+
+.wireland_admin_form__input {
+    font-size: 18px;
+    padding: 8px 14px;
+    display: inline-block;
+    width: 400px;
+    color: #666 !important;
+}
+
+.wireland_admin_message {
+    padding: 8px 14px;
+    font-size: 14px;
+    display: block;
+}
+
+.wireland_admin_message--success {
+    background: rgb(87, 153, 87);
+    border-left: 4px solid rgb(59, 133, 59);
+    color: #fff;
+}
