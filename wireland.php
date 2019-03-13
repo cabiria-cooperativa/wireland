@@ -48,21 +48,43 @@ class Wireland {
 
     /* aggiunge il template alla select del backend */
     function add_template_to_select($post_templates, $wp_theme, $post, $post_type) {
-        $post_templates['wireland-default.php'] = __('Wireland default');
+ 
+        $this->get_template_files('landing', $post_templates);
+        $this->get_template_files('thankyou', $post_templates);
         return $post_templates;
     }
 
-    /* recupera il template default */
+    /* recupera i template file */
+    private function get_template_files($folder, &$post_templates) {
+        $templates = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/' . $folder, SCANDIR_SORT_DESCENDING);
+        for ($i = 0; $i < count($templates); $i++) {
+            if ($templates[$i] != '.' && $templates[$i] != '..') $post_templates[$templates[$i]] = __(basename($templates[$i],'.php'));
+        }
+    }
+
+    /* recupera il template della pagina */
     function get_template($template) {
         global $post;
-        if (get_page_template_slug($post->ID) === 'wireland-default.php') {
-            if ($theme_file = locate_template(array('wireland-default.php'))) {
-                $template = $theme_file;
-            } else {
-                $template = plugin_dir_path( __FILE__ ) . 'assets/templates/landing/wireland-default.php';
+        $template = $this->scan_templates('landing');
+        if (!$template) $template = $this->scan_templates('thankyou');
+        if (!$template) throw new \Exception('No template found');
+        return $template;
+    }
+
+    /* scansiona i template file */
+    private function scan_templates($folder) {
+        $template_files = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/'. $folder , SCANDIR_SORT_DESCENDING);
+        for ($i = 0; $i < count($template_files); $i++) {
+            if ($template_files[$i] != '.' && $template_files[$i] != '..') {
+                if (get_page_template_slug($post->ID) === $template_files[$i]) {
+                    if ($theme_file = locate_template(array($template_files[$i]))) {
+                        $template = $theme_file;
+                    } else {
+                        $template = plugin_dir_path( __FILE__ ) . 'assets/templates/' . $folder . '/' . $template_files[$i];
+                    }
+                }
             }
         }
-        if (!$template) throw new \Exception('No template found');
         return $template;
     }
 
