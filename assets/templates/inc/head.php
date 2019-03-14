@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ) ?>../../css/style.css?ver=<?php echo mt_rand() ?>">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
+		<script src="<?php echo plugin_dir_url( __FILE__ ) ?>../../js/wireland.js?ver=<?php echo mt_rand() ?>"></script>
 
         <?php Wireland::getTrackingAnalytics() ?>
         <?php Wireland::getTrackingPixel() ?>

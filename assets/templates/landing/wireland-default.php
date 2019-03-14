@@ -17,7 +17,7 @@
                         <h2>Vel volutpat elit finibus a h2</h2>
                         <p>Sed vel porttitor urna. Phasellus placerat ornare cursus.</p>
                         <p>Epsum vitae risus elementum condimentum quis a elit. Suspendisse diam ipsum, congue sit amet dapibus et, rutrum malesuada elit</p>
-                        <div class="cabi_block__button"><a href="#" class="cabi_block__link cabi_block__cta">Call to action</a></div>
+                        <div class="cabi_block__button"><a data-scroll href="#neartofooter" class="cabi_block__link cabi_block__cta">Call to action</a></div>
                     </div>
                     <div class="cabi_block--form col-md-6">
                         <form method="post" action="">
@@ -126,8 +126,9 @@
         <section class="cabi_block">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6 cabi_block__coverimage">
-                            <img class="cabi_block__image" src="https://picsum.photos/768/768">
+                        <div class="col-md-6">
+                            <img alt="" class="cabi_block__image" src="https://picsum.photos/768/768">
+							<img alt="" class="cabi_block__image" src="<?php echo plugin_dir_url( __FILE__ ) ?>../images/pollon.jpg">
                         </div>
                         <div class="col-md-6">
                             <h2>Simple image</h2>
@@ -137,31 +138,31 @@
                 </div>
             </section>
 
-        <section class="cabi_block">
+        <section id="neartofooter" class="cabi_block">
             <div class="container">
                 <div class="row cabi_block__icons">
                     <div class="col-12 col-sm-4 col-lg-2 cabi_block__icon">
-                        <img src="https://picsum.photos/100/100">
+                        <img alt="" src="https://picsum.photos/100/100">
                         <p>Icona</p>
                     </div>
                     <div class="col-12 col-sm-4 col-lg-2 cabi_block__icon">
-                        <img src="https://picsum.photos/100/100">
+                        <img alt="" src="https://picsum.photos/100/100">
                         <p>Icona</p>
                     </div>
                     <div class="col-12 col-sm-4 col-lg-2 cabi_block__icon">
-                        <img src="https://picsum.photos/100/100">
+                        <img alt="" src="https://picsum.photos/100/100">
                         <p>Icona</p>
                     </div>
                     <div class="col-12 col-sm-4 col-lg-2 cabi_block__icon">
-                        <img src="https://picsum.photos/100/100">
+                        <img alt="" src="https://picsum.photos/100/100">
                         <p>Icona</p>
                     </div>
                     <div class="col-12 col-sm-4 col-lg-2 cabi_block__icon">
-                        <img src="https://picsum.photos/100/100">
+                        <img alt="" src="https://picsum.photos/100/100">
                         <p>Icona</p>
                     </div>
                     <div class="col-12 col-sm-4 col-lg-2 cabi_block__icon">
-                        <img src="https://picsum.photos/100/100">
+                        <img alt="" src="https://picsum.photos/100/100">
                         <p>Icona</p>
                     </div>
                 </div>

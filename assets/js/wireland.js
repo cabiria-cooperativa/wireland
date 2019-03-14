@@ -1,4 +1,13 @@
 jQuery(document).ready(function($) {
+	
+	/**
+     * Smooth scroll
+     * https://github.com/cferdinandi/smooth-scroll
+     */
+    var scroll = new SmoothScroll('a[href*="#"]', {
+        speed: 300,
+        speedAsDuration: true
+    });
     
     console.log('Plugin boilerplate loaded...');
     

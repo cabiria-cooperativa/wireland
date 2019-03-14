@@ -65,10 +65,10 @@ class Wireland {
     /* recupera il template della pagina */
     function get_template($template) {
         global $post;
-        $template = $this->scan_templates('landing');
-        if (!$template) $template = $this->scan_templates('thankyou');
-        if (!$template) throw new \Exception('No template found');
-        return $template;
+        $wireland_template = $this->scan_templates('landing');
+        if (!$wireland_template) $wireland_template = $this->scan_templates('thankyou');
+        if (!$wireland_template) return $template;
+        return $wireland_template;
     }
 
     /* scansiona i template file */
