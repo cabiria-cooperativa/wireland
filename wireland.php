@@ -38,13 +38,17 @@ class Wireland {
 
     function deactivation(){
         $this->remove_settings();
-	  }
+	}
 
     function init() {
         wp_enqueue_style( 'cabi_plugin', plugin_dir_url( __FILE__ ) . 'assets/css/style.css' , array(), mt_rand());
         wp_enqueue_script('cabi_plugin', plugin_dir_url( __FILE__ ) . 'assets/js/wireland.js', array('jquery'), mt_rand(), true);
         wp_localize_script('init', 'init_ajax', array('url' => admin_url( 'admin-ajax.php' )));
     }
+	
+	static function getImgPath() {
+		return plugin_dir_url(__FILE__) . '../images/';
+	}
 
     /* aggiunge il template alla select del backend */
     function add_template_to_select($post_templates, $wp_theme, $post, $post_type) {
@@ -196,6 +200,29 @@ class Wireland {
                 <label>Codice Analytics</label>
                 <input class="wireland_admin_form__input" value="<?php echo get_option('wireland-tracking-analytics') ?>" type="text" name="analytics" id="analytics" placeholder="ANALYTICS_TRACKING_CODE">
                 <?php submit_button('Salva'); ?>
+                <h2>2. Associazione landing &raquo; thank you page</h2>
+
+
+               
+                <?php
+                $landing_files = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/landing', SCANDIR_SORT_DESCENDING);
+                for ($i = 0; $i < count($landing_files); $i++) {
+                    if ($landing_files[$i] != '.' && $landing_files[$i] != '..') {
+                        ?><label><?php echo basename($landing_files[$i], '.php') ?></label><?php
+                        $thankyou_files = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/thankyou', SCANDIR_SORT_DESCENDING);
+                        for ($j = 0; $j < count($thankyou_files); $j++) {
+                            if ($thankyou_files[$j] != '.' && $thankyou_files[$j] != '..') {
+                            ?><select><?php
+                                ?><option value="<?php echo basename($thankyou_files[$j], '.php') ?>"><?php echo basename($thankyou_files[$j], '.php') ?></option><?php
+                            ?></select><?php
+                            }
+                        }
+                    }
+                }
+                ?>
+               
+
+
             </form>
         </div>
         <?php
