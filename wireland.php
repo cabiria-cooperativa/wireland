@@ -43,11 +43,10 @@ class Wireland {
     function init() {
         wp_enqueue_style( 'cabi_plugin', plugin_dir_url( __FILE__ ) . 'assets/css/style.css' , array(), mt_rand());
         wp_enqueue_script('cabi_plugin', plugin_dir_url( __FILE__ ) . 'assets/js/wireland.js', array('jquery'), mt_rand(), true);
-        wp_localize_script('init', 'init_ajax', array('url' => admin_url( 'admin-ajax.php' )));
     }
 	
 	static function getImgPath() {
-		return plugin_dir_url(__FILE__) . '../images/';
+		return plugin_dir_url(__FILE__) . 'assets/images/';
 	}
 
     /* aggiunge il template alla select del backend */
@@ -104,6 +103,10 @@ class Wireland {
         </p>
         <?php
         return ob_get_clean();
+    }
+
+    static function getThankYouPageUrl() {
+        return get_option('wireland-thank-you-page');
     }
 
     static function getTrackingAnalytics() {
@@ -172,11 +175,15 @@ class Wireland {
     function add_settings() {
         add_option('wireland-tracking-analytics', '');
         add_option('wireland-tracking-pixel', '');
+        add_option('wireland-thank-you-page', '');
+        add_option('wireland-email', '');
     }
 
     function remove_settings() {
         delete_option('wireland-tracking-analytics');
         delete_option('wireland-tracking-pixel');
+        delete_option('wireland-thank-you-page', '');
+        delete_option('wireland-email', '');
     }
 
     function render_settings_page() {
@@ -189,6 +196,8 @@ class Wireland {
                 echo '<p class="wireland_admin_message wireland_admin_message--success">Impostazioni aggiornate!</p>';
                 update_option('wireland-tracking-pixel', $_POST['pixel']);
                 update_option('wireland-tracking-analytics', $_POST['analytics']);
+                update_option('wireland-thank-you-page', $_POST['thank-you']);
+                update_option('wireland-email', $_POST['email']);
             }
             ?>
             <h1>Impostazioni Wireland</h1>
@@ -199,12 +208,13 @@ class Wireland {
                 <input class="wireland_admin_form__input" value="<?php echo get_option('wireland-tracking-pixel') ?>" type="text" name="pixel" id="pixel" placeholder="PIXEL_TRACKING_CODE">
                 <label>Codice Analytics</label>
                 <input class="wireland_admin_form__input" value="<?php echo get_option('wireland-tracking-analytics') ?>" type="text" name="analytics" id="analytics" placeholder="ANALYTICS_TRACKING_CODE">
-                <?php submit_button('Salva'); ?>
-                <h2>2. Associazione landing &raquo; thank you page</h2>
-
-
-               
+                
+                
+                
+                
+                <h2>2. Thank you page</h2>
                 <?php
+                /*
                 $landing_files = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/landing', SCANDIR_SORT_DESCENDING);
                 for ($i = 0; $i < count($landing_files); $i++) {
                     if ($landing_files[$i] != '.' && $landing_files[$i] != '..') {
@@ -219,13 +229,54 @@ class Wireland {
                         }
                     }
                 }
-                ?>
-               
+                */
 
+                $query = new WP_query (array(
+                    'post_type' => 'page',
+                    'nopaging' => true,
+                    'orderby' => 'post_title',
+                    'order' => 'ASC'
+                ));
+                if ($query->have_posts()) {
+                    $options = '';
+                    while ($query->have_posts()) {
+                        $query->the_post();
+                        $options .= '<option';
+                        if (get_the_permalink() == get_option('wireland-thank-you-page')) $options .= ' selected="selected"';
+                        $options .= ' value="' . get_the_permalink() . '">' . get_the_title() . '</option>';
+                    }
+                }
+                wp_reset_query();
+                wp_reset_postdata();
+                ?>
+                <label>Seleziona la pagina di atterraggio del form</label>
+                <select class="wireland_admin_form__select" name="thank-you" id="thank-you">
+                <?php echo $options ?>    
+                </select>
+
+                <h2>3. Indirizzo email</h2>
+                <label>A chi verrano inviati i dati del form?</label>
+                <input class="wireland_admin_form__input" value="<?php echo get_option('wireland-email') ?>" type="text" name="email" id="email" placeholder="EMAIL">
+
+                <?php submit_button('Salva'); ?>
 
             </form>
         </div>
         <?php
+    }
+
+    static function send_email() {
+        
+        $message = '';
+        $userdata = '';
+        
+        if (isset($_POST['submit']) && wp_verify_nonce($_POST['to_thank_you_page_nonce'], 'to_thank_you_page') && get_option('wireland-email') != '') {
+            foreach ($_POST as $key => $value) {
+                $userdata .= "$key: $value\n";
+            }
+            $message .= $userdata;
+            mail(get_option('wireland-email'), 'Thank you page', $message);
+        }
     }
     
 

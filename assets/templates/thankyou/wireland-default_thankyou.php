@@ -5,6 +5,7 @@
  */ 
 ?>
 
+<?php WireLand::send_email() ?>
 <?php include_once(dirname(__FILE__) . '/../inc/head.php') ?>
 
     <body>

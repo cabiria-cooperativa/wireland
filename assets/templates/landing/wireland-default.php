@@ -20,11 +20,12 @@
                         <div class="cabi_block__button"><a data-scroll href="#neartofooter" class="cabi_block__link cabi_block__cta">Call to action</a></div>
                     </div>
                     <div class="cabi_block--form col-md-6">
-                        <form method="post" action="">
+                        <form id="to-thank-you-page" method="post" action="<?php echo Wireland::getThankYouPageUrl() ?>">
+                            <?php wp_nonce_field('to_thank_you_page', 'to_thank_you_page_nonce') ?>
                             <input class="cabi_block--input" placeholder="Il tuo nome" type="text" name="nome" id="nome">
                             <input class="cabi_block--input" placeholder="La tua email" type="email" name="email" id="email">
-                            <p><input type="checkbox" name="privacy" id="privacy">Lorem ipsum dolor sit amet</a>, consectetur adipiscing elit. Aenean ut consectetur turpis, sit amet aliquam nulla. Ut auctor quam ac quam semper porttitor.</p>
-                            <input class="cabi_block--submit" type="submit" value="Invia">
+                            <small><span class="privacy_container"><input type="checkbox" name="privacy" id="privacy"></span><a href="" target="_blank">Ho preso atto dell'informativa</a> e acconsento, ai sensi dell’art. 13 del D.Lgs. n. 196/2003, al trattamento ed alla comunicazione dei miei dati personali ad opera dei soggetti indicati nella predetta informativa e nei limiti di cui alla stessa. Rimane fermo che tale consenso è condizionato al rispetto delle disposizioni della vigente informativa.</small>
+                            <input class="cabi_block--submit" type="submit" name="submit" value="Invia">
                         </form>
                     </div>
                 </div>
@@ -127,8 +128,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6">
-                            <img alt="" class="cabi_block__image" src="https://picsum.photos/768/768">
-							<img alt="" class="cabi_block__image" src="<?php echo plugin_dir_url( __FILE__ ) ?>../images/pollon.jpg">
+							<img alt="" class="cabi_block__image" src="<?php echo Wireland::getImgPath() ?>pollon.jpg">
                         </div>
                         <div class="col-md-6">
                             <h2>Simple image</h2>
