@@ -94,7 +94,7 @@
             </div>
         </section>
 
-        <section class="cabi_block cabi_block--chequered">
+        <section class="cabi_block cabi_block--chequered cabi-block--cover">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">

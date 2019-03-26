@@ -324,6 +324,18 @@ em {
 
 /* IMAGES ================================ */
 
+.cabi-block--cover {
+    padding: 0 !important;
+}
+
+.cabi-block--cover > .container > .row  > div {
+    padding: 40px !important;
+}
+
+.cabi-block--cover > .container > .row > .cabi_block__coverimage {
+    padding: 0 !important;
+}
+
 .cabi_block__image {
     width: 100%;
     height: auto;
