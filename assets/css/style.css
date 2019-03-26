@@ -294,6 +294,10 @@ em {
     background: var(--footer__background) !important;
 }
 
+.cabi_block--footer .row {
+    align-items: center;
+}
+
 .cabi_block--footer a {
     color: #fff;
     font-weight: 400;
@@ -309,6 +313,7 @@ em {
 .cabi_block__social i {
     font-size: 32px;
     margin: 0 var(--margin__default) 0 -15px;
+	color: var(--footer__foreground);
 }
 
 /* ICONS ================================= */
