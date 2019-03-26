@@ -340,6 +340,16 @@ em {
 
 }
 
+/* SMALL TO MEDIUM ======================== */
+
+@media (min-width: 576px) and (max-width: 767px) {
+    
+    .cabi_block .container {
+        max-width: none;
+    }
+
+}
+
 /* MEDIUM ================================ */
 
 @media (min-width: 768px) {
