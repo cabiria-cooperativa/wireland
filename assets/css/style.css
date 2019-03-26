@@ -158,10 +158,17 @@ em {
     text-align: center;
 }
 
-/* sposta l'immagine prima del testo */
+/* sposta l'immagine dopo il testo - se inizio con una sezione testo > immagine */
 .cabi_block--chequered:nth-of-type(even) .row > .cabi_block__coverimage {
 	order: -1;
 }
+
+/* sposta l'immagine dopo il testo - se inizio con una sezione immagine > testo */
+/*
+.cabi_block--chequered:nth-of-type(odd) .row > .cabi_block__coverimage {
+	order: -1;
+}
+*/
 
 /* HERO ================================== */
 
@@ -386,10 +393,17 @@ em {
         height: var(--images_heroheight);
     }
 	
-	/* sposta l'immagine dopo il testo */
+	/* sposta l'immagine dopo il testo - se inizio con una sezione testo > immagine */
 	.cabi_block--chequered:nth-of-type(even) .row > .cabi_block__coverimage {
 		order: 2;
 	}
+	
+	/* sposta l'immagine dopo il testo - se inizio con una sezione immagine > testo */
+	/*
+	.cabi_block--chequered:nth-of-type(odd) .row > .cabi_block__coverimage {
+		order: 2;
+	}
+	*/
 
 }
 
