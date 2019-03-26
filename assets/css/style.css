@@ -329,7 +329,7 @@ em {
 }
 
 .cabi-block--cover > .container > .row  > div {
-    padding: 40px !important;
+    padding: var(--cabi_block_padding) !important;
 }
 
 .cabi-block--cover > .container > .row > .cabi_block__coverimage {
