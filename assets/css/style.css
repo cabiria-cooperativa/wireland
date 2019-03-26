@@ -312,6 +312,11 @@ em {
 
 /* SOCIAL ================================ */
 
+.cabi_block__social ul {
+    margin: 0;
+    padding: 0;
+}
+
 .cabi_block__social li {
     list-style-type: none;
     display: inline-block;
