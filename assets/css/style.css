@@ -299,6 +299,7 @@ em {
 .cabi_block--footer {
     color: var(--footer__foreground);
     background: var(--footer__background) !important;
+	text-align: center;
 }
 
 .cabi_block--footer .row {
@@ -417,6 +418,10 @@ em {
 		order: 2;
 	}
 	*/
+	
+	.cabi_block--footer {
+        text-align: left;
+    }
 
 }
 
