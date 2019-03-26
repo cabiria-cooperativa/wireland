@@ -5,8 +5,8 @@ jQuery(document).ready(function($) {
      * https://github.com/cferdinandi/smooth-scroll
      */
     var scroll = new SmoothScroll('a[href*="#"]', {
-        speed: 300,
-        speedAsDuration: true
+        speed: 600,
+        //speedAsDuration: true
     });    
 
     /**
