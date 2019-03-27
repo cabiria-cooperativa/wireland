@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Wireland
  * Plugin URI: https://github.com/cabiria-cooperativa/wireland
- * Description: Wireframe per landing page
- * Version: 1.0.0
+ * Description: Wireframe per landing page compatibile con Elementor.
+ * Version: 2.0.0
  * Author: Simone Alati
  * Author URI: https://www.cabiria.net
  * Text Domain: cabi
@@ -14,11 +14,13 @@
 
 class Wireland {
 
+    static $elementor;
+
     function __construct() {
 
-        add_action('wp_enqueue_scripts', array($this, 'init'));     	/* accodo js e css                      */
-        add_action('admin_menu', array($this, 'add_settings_page'));    /* creo una pagina di impostazioni      */
-        add_shortcode('cabi_plugin', array($this, 'render'));       	/* aggiungo uno shortcode               */
+        add_action('wp_enqueue_scripts', array($this, 'init'), 999999);
+        add_action('admin_menu', array($this, 'add_settings_page'));
+        add_action('wp_enqueue_scripts', array($this, 'isMadeWithElementor'));
 
         /* azioni ajax */
         add_action('wp_ajax_nopriv_hello_world_ajax', array($this, 'hello_world_ajax'));
@@ -38,15 +40,77 @@ class Wireland {
 
     function deactivation(){
         $this->remove_settings();
-	}
+    }
 
     function init() {
-        //wp_enqueue_style( 'cabi_plugin', plugin_dir_url( __FILE__ ) . 'assets/css/style.css' , array(), mt_rand());
+        global $post;
+        global $wp_styles;
+        global $wp_scripts;
+
+        if (self::isElementorActive()) {
+            // se sono nell'editor di Elementor esco
+            if (\Elementor\Plugin::$instance->preview->is_preview_mode()) return;
+            $template_slug = get_page_template_slug();
+            if (in_array($template_slug, self::get_all_template_filenames())) {
+                // mantengo nel frontend gli stili di elementor
+                //$styles_to_keep = array("elementor-animations", "elementor-frontend", "elementor-global", "elementor-icons-css", "elementor-common-css", "elementor-post-" . $post->ID);
+                
+                // rimuovo gli stili che non sono di elementor 
+                foreach ($wp_styles->registered as $handle => $data) {
+                    if (strpos($handle, 'elementor') === false) {
+                        wp_deregister_style($handle);
+                        wp_dequeue_style($handle);
+                    }
+                    /*
+                    if (in_array($handle, $styles_to_keep)) continue;
+                    wp_deregister_style($handle);
+                    wp_dequeue_style($handle);
+                    */
+                }
+
+                // rimuovo gli script che non sono di elementor
+                foreach ($wp_scripts->registered as $handle => $data) {
+                    if (strpos($handle, 'elementor') === false) {
+                        wp_deregister_script($handle);
+                        wp_dequeue_script($handle);
+                    }
+                }
+            }
+        }
     }
-	
+
+    /* recupera tutti i template di Wireland */
+    static function get_all_template_filenames() {
+        $files = array();
+        $templates = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/landing' . $folder, SCANDIR_SORT_DESCENDING);
+        for ($i = 0; $i < count($templates); $i++) {
+            if ($templates[$i] != '.' && $templates[$i] != '..') {
+                $files[] = $templates[$i];
+            }
+        }
+        $templates = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/thankyou' . $folder, SCANDIR_SORT_DESCENDING);
+        for ($i = 0; $i < count($templates); $i++) {
+            if ($templates[$i] != '.' && $templates[$i] != '..') {
+                $files[] = $templates[$i];
+            }
+        }
+        return $files;
+    }
+    
+    /* recupera il percorso della cartella immagini */
 	static function getImgPath() {
 		return plugin_dir_url(__FILE__) . 'assets/images/';
-	}
+    }
+    
+    /* esegue il loop standard di WordPress */
+    static function theLoop() {
+        if (have_posts()) {
+            while (have_posts()) {
+                the_post(); 
+                the_content();
+            }
+        }
+    }
 
     /* aggiunge il template alla select del backend */
     function add_template_to_select($post_templates, $wp_theme, $post, $post_type) {
@@ -88,20 +152,6 @@ class Wireland {
             }
         }
         return $template;
-    }
-
-    function render($atts, $content = null) {
-        extract(shortcode_atts(array(
-            'par1' => 'Hello',
-            'par2' => 'world'
-            ), $atts,  'render'));
-        ob_start();
-		?>
-        <p class="cabi_helloworld">
-            <?php echo $par1 ?> <?php echo $par2 ?>!
-        </p>
-        <?php
-        return ob_get_clean();
     }
 
     static function getThankYouPageUrl() {
@@ -201,6 +251,7 @@ class Wireland {
             ?>
             <h1>Impostazioni Wireland</h1>
             <form method="post" class="wireland_admin_form">
+                
                 <h2>1. Codici di tracciamento</h2>
                 <?php wp_nonce_field('modify_settings', 'modify_settings_nonce') ?>
                 <label>Codice Facebook pixel</label>
@@ -208,28 +259,8 @@ class Wireland {
                 <label>Codice Analytics</label>
                 <input class="wireland_admin_form__input" value="<?php echo get_option('wireland-tracking-analytics') ?>" type="text" name="analytics" id="analytics" placeholder="ANALYTICS_TRACKING_CODE">
                 
-                
-                
-                
                 <h2>2. Thank you page</h2>
                 <?php
-                /*
-                $landing_files = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/landing', SCANDIR_SORT_DESCENDING);
-                for ($i = 0; $i < count($landing_files); $i++) {
-                    if ($landing_files[$i] != '.' && $landing_files[$i] != '..') {
-                        ?><label><?php echo basename($landing_files[$i], '.php') ?></label><?php
-                        $thankyou_files = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/thankyou', SCANDIR_SORT_DESCENDING);
-                        for ($j = 0; $j < count($thankyou_files); $j++) {
-                            if ($thankyou_files[$j] != '.' && $thankyou_files[$j] != '..') {
-                            ?><select><?php
-                                ?><option value="<?php echo basename($thankyou_files[$j], '.php') ?>"><?php echo basename($thankyou_files[$j], '.php') ?></option><?php
-                            ?></select><?php
-                            }
-                        }
-                    }
-                }
-                */
-
                 $query = new WP_query (array(
                     'post_type' => 'page',
                     'nopaging' => true,
@@ -264,6 +295,7 @@ class Wireland {
         <?php
     }
 
+    /* invia una mail alla compilazione del form */
     static function send_email() {
         
         $message = '';
@@ -277,7 +309,22 @@ class Wireland {
             mail(get_option('wireland-email'), 'Thank you page', $message);
         }
     }
-    
+
+    /* verifica se il plugin Elementor è attivato */
+    static function isElementorActive() {
+        if (in_array('elementor/elementor.php', get_option("active_plugins"))) return true;
+        return false;
+    }
+
+    /* verifica se nella pagina è stato usato l'editor di Elementor */
+    static function isMadeWithElementor() {
+        global $post;
+        if (self::isElementorActive()) {
+            if (\Elementor\Plugin::$instance->db->is_built_with_elementor($post->ID)) return true;
+            return false;
+        }
+        return false;
+    }
 
 }
 

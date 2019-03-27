@@ -14,4 +14,8 @@
             </div>
         </div>
     </div>
+    <?php 
+    // per usare Elementor nel backend ho bisogno di wp_footer
+    if (Wireland::isElementorActive() && Wireland::isMadeWithElementor()) wp_footer();
+    ?>
 </footer>
