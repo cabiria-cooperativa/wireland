@@ -10,11 +10,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <?php if (!Wireland::isMadeWithElementor()) : ?>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
-            <?php endif; ?>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+        <?php endif; ?>
         <link rel="stylesheet" href="<?php echo plugin_dir_url( __FILE__ ) ?>../../css/style.css?ver=<?php echo mt_rand() ?>">
         <?php if (!Wireland::isMadeWithElementor()) : ?>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <?php endif; ?>
 		<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
 		<script src="<?php echo plugin_dir_url( __FILE__ ) ?>../../js/wireland.js?ver=<?php echo mt_rand() ?>"></script>
