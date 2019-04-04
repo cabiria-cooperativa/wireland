@@ -21,6 +21,7 @@ class Wireland {
         add_action('wp_enqueue_scripts', array($this, 'init'), 999999);
         add_action('admin_menu', array($this, 'add_settings_page'));
         add_action('wp_enqueue_scripts', array($this, 'isMadeWithElementor'));
+        add_shortcode('wireland-form', array($this, 'renderForm'));
 
         /* azioni ajax */
         add_action('wp_ajax_nopriv_hello_world_ajax', array($this, 'hello_world_ajax'));
@@ -72,7 +73,7 @@ class Wireland {
                 foreach ($wp_scripts->registered as $handle => $data) {
                     if (strpos($handle, 'elementor') === false) {
                         wp_deregister_script($handle);
-                        wp_dequeue_script($handle);
+                        wp_dequeue_script($handle); 
                     }
                 }
             }
@@ -114,7 +115,6 @@ class Wireland {
 
     /* aggiunge il template alla select del backend */
     function add_template_to_select($post_templates, $wp_theme, $post, $post_type) {
- 
         $this->get_template_files('landing', $post_templates);
         $this->get_template_files('thankyou', $post_templates);
         return $post_templates;
@@ -124,7 +124,7 @@ class Wireland {
     private function get_template_files($folder, &$post_templates) {
         $templates = scandir(plugin_dir_path( __FILE__ ) . 'assets/templates/' . $folder, SCANDIR_SORT_DESCENDING);
         for ($i = 0; $i < count($templates); $i++) {
-            if ($templates[$i] != '.' && $templates[$i] != '..') $post_templates[$templates[$i]] = __(basename($templates[$i],'.php'));
+            if ($templates[$i] != '.' && $templates[$i] != '..') $post_templates[$templates[$i]] = __('Wireland ' . basename($templates[$i],'.php'));
         }
     }
 
@@ -191,6 +191,7 @@ class Wireland {
             /></noscript>
 
             <!-- Facebook Pixel Code - tracciamento eventi sui pulsanti -->
+            <!--
             <script>
             jQuery('.cabi_block__cta').click(function() {
                 fbq('trackCustom', 'EVENT_NAME', {
@@ -200,6 +201,7 @@ class Wireland {
                 });
             });
             </script>
+            -->
             <?php
         }
     }
@@ -324,6 +326,18 @@ class Wireland {
             return false;
         }
         return false;
+    }
+
+    function renderForm() {
+        $tmpl_url = plugin_dir_url( __FILE__ ) . 'assets/templates/form/form.html';
+        $template = @file_get_contents($tmpl_url);
+        $action = Wireland::getThankYouPageUrl();
+        $nonce = wp_nonce_field('to_thank_you_page', 'to_thank_you_page_nonce');
+        $template = str_replace('[+action+]', $action, $template);
+        $template = str_replace('[+wp_nonce_field+]', $nonce, $template);
+        ob_start();
+		echo $template;
+		return ob_get_clean();
     }
 
 }

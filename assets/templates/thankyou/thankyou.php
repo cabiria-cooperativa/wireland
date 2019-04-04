@@ -1,6 +1,6 @@
 <?php 
 /*
- * Template Name: Wireland Thank you
+ * Template Name: Wireland Thank you page
  * Template Post Type: page
  */ 
 ?>

@@ -1,6 +1,6 @@
 <?php 
 /*
- * Template Name: Wireland default
+ * Template Name: Wireland landing
  * Template Post Type: page
  */ 
 ?>
